@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+import Menu from "./components/Menu";
+import Contador from "./components/Contador";
+import Lista from "./components/Lista";
+import Home from "./components/Home";
+import Form from "./components/Form";
+import CRUD from './components/CRUD'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Menu />
+      <div className="container py-4">
+        <Switch>
+          <Route path="/contador" component={Contador} />
+          <Route path="/lista" component={Lista} />
+          <Route path="/formulario" component={Form} />
+          <Route path="/crud" component={CRUD} />
+          <Route exact path="/home" component={Home} />
+          <Redirect path="/" to="/home" />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
