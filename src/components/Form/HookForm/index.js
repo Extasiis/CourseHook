@@ -2,14 +2,7 @@ import React, { Fragment } from "react";
 import { useForm } from "react-hook-form";
 
 const HookForm = (props) => {
-  const { register, errors, handleSubmit } = useForm({ defaultValues });
-
-  const defaultValues = {
-
-    TextField: "",
-    Checkbox: false,
-
-  };
+  const { register, errors, handleSubmit } = useForm()
 
   const onSubmit = (data) => {
     console.log(data);
@@ -72,11 +65,13 @@ const HookForm = (props) => {
           {errors?.password?.message}
         </span>
         </div>
-        
+        <div className="col-md-3 mb-2">
         <button className="btn btn-primary btn-block" type="submit">
             Enviar
           </button>
+          </div>
       </form>
+
     </Fragment>
   );
 };

@@ -34,6 +34,9 @@ function Menu() {
             <li className="nav-item">
               <Link to="/crud" className="nav-link" >CRUD</Link>
             </li>
+            <li className="nav-item">
+              <Link to="/effect" className="nav-link" >Effect</Link>
+            </li>
           </ul>
         </div>
         </div>

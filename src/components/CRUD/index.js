@@ -7,64 +7,61 @@ import EditUserForm from "./EditUserForm";
 import "./style.css";
 
 const Crud = () => {
-  const userData = [
-    { id: uuidv4(), name: "Tania", username: "Tanialin" },
-    { id: uuidv4(), name: "Robet", username: "Mono" },
-    { id: uuidv4(), name: "Carlos", username: "Bigote" },
-  ];
+  const usersData = [
+		{ id: uuidv4(), name: 'Tania', username: 'floppydiskette' },
+		{ id: uuidv4(), name: 'Craig', username: 'siliconeidolon' },
+		{ id: uuidv4(), name: 'Ben', username: 'benisphere' },
+	];
 
-  //state
-  const [users, setUsers] = useState(userData);
+	const [users, setUsers] = useState(usersData);
 
-  //Agregar Usuario
-  const addUser = (user) => {
-    user.id = uuidv4();
-    setUsers([...users, user]);
-  };
+	const addUser = (user) => {
+		user.id = uuidv4();
+		setUsers([...users, user]);
+	};
 
-  const deleteUser = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
-  };
+	const deleteUser = (id) => {
+		setUsers(users.filter((user) => user.id !== id));
+	};
 
-  //editar usurario
-  const [editing, setEditing] = useState(false)
-  const [currentUser, setCurrentUser] = useState({
-      id: null, name: '', username: ''
-  })
+	const [isEditing, setEditing] = useState(false);
 
-  const editRow = (user) => {
-      setEditing(true)
-      setCurrentUser({
-          id: user.id, name: user.name, username: user.username
-      })
-  }
+	const initialFormState = { id: null, name: '', username: '' };
+	const [currentUser, setCurrentUser] = useState(initialFormState);
 
-  return (
-    <Fragment>
-      <div className="container">
-        <h1 className="">CRUD App with Hooks</h1>
-        <div className="row">
-          <div className="col-6">
-            {editing ? (
-              <Fragment>
-                <h2>Edit User</h2>
-                <EditUserForm currentUser={currentUser} />
-              </Fragment>
-            ) : (
-              <Fragment>
-                <h2>Add new User</h2>
-                <AddUserForm addUser={addUser} />
-              </Fragment>
-            )}
-          </div>
-          <div className="col-6">
-            <h2>View User</h2>
-            <UserTable users={users} deleteUser={deleteUser}  setEditing={setEditing} editRow={editRow}/>
-          </div>
-        </div>
-      </div>
-    </Fragment>
-  );
+	const editUser = (user) => {
+		setEditing(true);
+		setCurrentUser(user);
+	};
+
+	const updateUser = (id, editUser) => {
+		setEditing(false);
+		setUsers(users.map((user) => (user.id === id ? editUser : user)));
+	};
+	return (
+		<Fragment>
+			<h1>CRUD App with Hooks</h1>
+			<div className='flex-row'>
+				<div className='flex-large'>
+					{isEditing ? (
+						<div>
+							<h2>Edit user</h2>
+							<EditUserForm user={currentUser} edit={updateUser} />
+						</div>
+					) : (
+						<div>
+							<h2>Add user</h2>
+							<AddUserForm addUser={addUser} />
+						</div>
+					)}
+				</div>
+				<div className='flex-large'>
+					<h2>View users</h2>
+					<UserTable users={users} delete={deleteUser} isEditing={setEditing} edit={editUser} />
+				</div>
+			</div>
+		</Fragment>
+	);
 };
 
 export default Crud;
